@@ -28,6 +28,9 @@ public class CalculatorTest {
 
         operand = "ABC.43945849859485948958495849594";
         assertFalse(calculator.isValidOperand(operand));
+
+        operand = "-1";
+        assertFalse(calculator.isValidOperand(operand));
     }
     
     @Test
