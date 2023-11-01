@@ -7,7 +7,6 @@ import com.example.exception.InvalidInputException;
 public class Calculator {
 
     private static final String OPERAND_PATTERN = "[0-9]+[.]?[0-9]*";
-
     private static final String OPERATION_PATTERN = "[+|\\-|*|/]";
 
     public boolean isValidOperand(String s) {
@@ -42,12 +41,12 @@ public class Calculator {
 
         BigDecimal op1 = new BigDecimal(operand1);
         BigDecimal op2 = new BigDecimal(operand2);
-        BigDecimal result = switch (operation) {
 
-        case "+" -> op1.add(op2);
-        case "-" -> op1.subtract(op2);
-        case "*" -> op1.multiply(op2);
-        case "/" -> op1.divide(op2);
+        BigDecimal result = switch (operation) {
+        case "+" -> (new Context(new AdditionStrategy())).executeStrategy(op1, op2);
+        case "-" -> (new Context(new SubtractionStrategy())).executeStrategy(op1, op2);
+        case "*" -> (new Context(new MultiplicationStrategy())).executeStrategy(op1, op2);
+        case "/" -> (new Context(new DivisionStrategy())).executeStrategy(op1, op2);
         default -> null;
         };
 
