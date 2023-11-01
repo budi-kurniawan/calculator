@@ -1,4 +1,4 @@
-# Calculator with Java and TDD
+#Calculator with Java and TDD
 
 This is a simple Java project that shows how to parse arguments with regular expressions and perform calculations using BigDecimal (to guarantee accuracy). It is developed using the Test-Driven Development (TDD) method. TDD is a software development process that supports creating automated tests before the actual code. Now a standard best practice for developers working in an Agile development environment, it saves programmers from having to debug and rework their software. Instead, programmers can focus on the design and coding part.
 
@@ -10,6 +10,9 @@ The project uses the Strategy design pattern, first documented by Erich Gamma et
 This pattern allows the selection of an algorithm at runtime. In this project, a CalculationStrategy interface is created to encapsulate an execute method that is implemented by all subclasses. There are four subclasses of CalculationStrategy, each representing an operation: AdditionStrategy, SubtractionStrategy, MultiplicationStrategy and DivisionStrategy.
 
 There is also a Context class that delegates an algorithm to different Strategy objects.
+
+## Java Version
+It uses the latest feature of JDK 21, the pattern matching for switch.
 
 ## Cloning the project
 ```
