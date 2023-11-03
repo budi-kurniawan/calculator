@@ -1,4 +1,4 @@
-#Calculator with Java and TDD
+# Calculator with Java and TDD
 
 This is a simple Java project that shows how to parse arguments with regular expressions and perform calculations using BigDecimal (to guarantee accuracy). It is developed using the Test-Driven Development (TDD) method. TDD is a software development process that supports creating automated tests before the actual code. Now a standard best practice for developers working in an Agile development environment, it saves programmers from having to debug and rework their software. Instead, programmers can focus on the design and coding part.
 
