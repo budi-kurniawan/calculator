@@ -1,55 +1,39 @@
 package com.example;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
+import com.example.algorithm.Context;
+import com.example.exception.AlgorithmNotFoundException;
 import com.example.exception.InvalidInputException;
+import com.example.parser.InputParser;
+import com.example.parser.ParseResult;
+import com.example.validator.InputValidator;
 
 public class Calculator {
 
-    private static final String OPERAND_PATTERN = "[0-9]+[.]?[0-9]*";
-    private static final String OPERATION_PATTERN = "[+|\\-|*|/]";
-
-    public boolean isValidOperand(String s) {
-        return s != null && s.matches(OPERAND_PATTERN);
+    private InputParser inputParser;
+    private InputValidator inputValidator;
+    private Map<String, Context> contextMap;
+    
+    public Calculator(InputParser inputParser, InputValidator inputValidator, Map<String, Context> contextMap) {
+        this.inputParser = inputParser;
+        this.inputValidator = inputValidator;
+        this.contextMap = contextMap;
     }
 
-    public boolean isValidOperation(String s) {
-        return s != null && s.matches(OPERATION_PATTERN);
-    }
+    public BigDecimal calculate(String input) throws InvalidInputException, AlgorithmNotFoundException {
+        ParseResult parseResult = inputParser.parse(input);
+        String operand1 = parseResult.operand1();
+        String operation = parseResult.operation();
+        String operand2 = parseResult.operand2();
+        inputValidator.validate(operand1, operation, operand2);
 
-    public BigDecimal calculate(String input) throws InvalidInputException {
-        String[] tokens = input.split(" ");
-        if (tokens.length != 3) {
-            throw new InvalidInputException("Invalid input length.");
+        Context context = contextMap.get(operation);
+        if (context == null) {
+            throw new AlgorithmNotFoundException("Algorithm for operation " + operation + " is not found.");
         }
-
-        String operand1 = tokens[0];
-        String operation = tokens[1];
-        String operand2 = tokens[2];
-
-        if (!isValidOperand(operand1)) {
-            throw new InvalidInputException(operand1 + " is not a valid number");
-        }
-
-        if (!isValidOperation(operation)) {
-            throw new InvalidInputException(operation + " is not a valid operation");
-        }
-
-        if (!isValidOperand(operand2)) {
-            throw new InvalidInputException(operand2 + " is not a valid number");
-        }
-
-        BigDecimal op1 = new BigDecimal(operand1);
-        BigDecimal op2 = new BigDecimal(operand2);
-
-        BigDecimal result = switch (operation) {
-        case "+" -> (new Context(new AdditionStrategy())).executeStrategy(op1, op2);
-        case "-" -> (new Context(new SubtractionStrategy())).executeStrategy(op1, op2);
-        case "*" -> (new Context(new MultiplicationStrategy())).executeStrategy(op1, op2);
-        case "/" -> (new Context(new DivisionStrategy())).executeStrategy(op1, op2);
-        default -> null;
-        };
-
+        BigDecimal result = context.executeStrategy(new BigDecimal(operand1), new BigDecimal(operand2));
         System.out.println(input + " = " + result.toString());
         return result;
     }
