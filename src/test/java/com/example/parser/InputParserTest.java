@@ -15,7 +15,7 @@ public class InputParserTest {
     
     @BeforeEach
     public void setUp() {
-        inputParser = new InputParser();
+        inputParser = new SimpleInputParser();
     }
     
     @Test

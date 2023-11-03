@@ -9,7 +9,9 @@ import com.example.algorithm.DivisionStrategy;
 import com.example.algorithm.MultiplicationStrategy;
 import com.example.algorithm.SubtractionStrategy;
 import com.example.parser.InputParser;
+import com.example.parser.SimpleInputParser;
 import com.example.validator.InputValidator;
+import com.example.validator.SimpleInputValidator;
 
 public class CalculatorBuilder {
     
@@ -17,8 +19,8 @@ public class CalculatorBuilder {
     public static final String OPERATION_PATTERN = "[+|\\-|*|/]";
 
     public static Calculator build() {
-        InputParser inputParser = new InputParser();
-        InputValidator inputValidator = new InputValidator(OPERAND_PATTERN, OPERATION_PATTERN);
+        InputParser inputParser = new SimpleInputParser();
+        InputValidator inputValidator = new SimpleInputValidator(OPERAND_PATTERN, OPERATION_PATTERN);
         Map<String, Context> contextMap = new HashMap<>();
         contextMap.put("+", new Context(new AdditionStrategy()));
         contextMap.put("-", new Context(new SubtractionStrategy()));
