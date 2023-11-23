@@ -61,5 +61,13 @@ public class CalculatorTest {
                 () -> calculator.calculate("2 + 12c"));
         assertEquals("12c is not a valid number.", exception.getMessage());
     }
+    
+    
+    @Test
+    public void testAbc() throws InvalidInputException, AlgorithmNotFoundException {
+        Throwable exception = assertThrows(InvalidInputException.class, 
+                () -> calculator.calculate("9 / 0"));
+        assertEquals("Division by zero not allowed.", exception.getMessage());
+    }
 
 }
